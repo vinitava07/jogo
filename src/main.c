@@ -11,14 +11,13 @@
 int main(void)
 {
     // Initialization
-    InitWindow(WIDTH, HEIGHT, "TEste");
+    InitWindow(WIDTH, HEIGHT, "Teste");
     float xpos = WIDTH / 2;
     float ypos = HEIGHT / 2;
     // SetTargetFPS(60);
-    int movVelocity = 400;
+    int movVelocity = 1000;
     int gravity = 300;
     float dt = 0;
-    float yVel = 0;
     Vector2 velocity;
     //--------------------------------------------------------------------------------------
     while (!WindowShouldClose())
