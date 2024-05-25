@@ -89,8 +89,16 @@ void inputAndUpdateGameWorld(GameWorld *gw)
 
     if (CheckCollisionRecs(gw->player->collisionArea, gw->platform))
     {
-        gw->player->position.x = oldPosition.x;
-        gw->player->position.y = oldPosition.y;
+        if (gw->player->collisionArea.y <= gw->platform.y || gw->player->collisionArea.y >= gw->platform.y)
+        {
+            gw->player->position.y = oldPosition.y;
+        }
+        else if (gw->player->collisionArea.x >= gw->platform.x || gw->player->collisionArea.x <= gw->platform.x)
+        {
+            gw->player->position.x = oldPosition.x;
+        }
+        gw->player->collisionArea.x = gw->player->position.x;
+        gw->player->collisionArea.y = gw->player->position.y;
     }
 }
 
