@@ -1,5 +1,5 @@
-#include "../include/raylib.h"
-#include "../include/GameWorld.h"
+#include "raylib.h"
+#include "GameWorld.h"
 #define WIDHT 1280
 #define HEIGHT 720
 

@@ -1,4 +1,4 @@
-#include "../include/GameWorld.h"
+#include "GameWorld.h"
 #include <stdlib.h>
 #include <stdio.h> 
 #define WIDHT 1280

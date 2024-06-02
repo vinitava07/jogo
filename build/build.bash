@@ -1,1 +1,1 @@
-cc ../src/*.c -o main.out -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+cc ../src/*.c -o main.out -lraylib -lGL -lm -I ../include -lpthread -ldl -lrt -lX11
