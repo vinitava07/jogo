@@ -1,5 +1,5 @@
-#include "raylib.h"
-#include "GameWorld.h"
+#include "../include/raylib.h"
+#include "../include/GameWorld.h"
 #define WIDHT 1280
 #define HEIGHT 720
 
@@ -13,6 +13,7 @@ int main(void)
 
     Rectangle playerArea = {80, 80, 50, 50};
     Rectangle rect1 = {100, 100, 50, 50};
+    SetTargetFPS(60);
     // Main game loop
     while (!WindowShouldClose())
     {

@@ -1,6 +1,6 @@
-#include "GameWorld.h"
+#include "../include/GameWorld.h"
 #include <stdlib.h>
-#include <stdio.h> // For printf
+#include <stdio.h> 
 #define WIDHT 1280
 #define HEIGHT 720
 #define PLAYER_GRAVITY 300
@@ -8,6 +8,7 @@
 #define PLAYERV_Y 500
 
 float delta;
+void managePlayerCollision(GameWorld *gw);
 
 Player *createPlayer()
 {
@@ -72,8 +73,10 @@ void inputAndUpdateGameWorld(GameWorld *gw)
         gw->player->position.x -= gw->player->velocity.x * delta;
     if (IsKeyDown(KEY_W))
         gw->player->position.y -= gw->player->velocity.y * delta;
+        gw->player->gravity = 0;
     if (IsKeyDown(KEY_S))
         gw->player->position.y += gw->player->velocity.y * delta;
+
     if (gw->player->position.y >= HEIGHT - gw->player->texture.height)
     {
         gw->player->gravity = 0;
@@ -89,24 +92,7 @@ void inputAndUpdateGameWorld(GameWorld *gw)
 
     if (CheckCollisionRecs(gw->player->collisionArea, gw->platform))
     {
-        if (gw->player->collisionArea.y <= gw->platform.y)
-        {
-            gw->player->position.y = gw->platform.y - gw->player->collisionArea.height;
-        }
-        else if (gw->player->collisionArea.y >= gw->platform.y + gw->player->collisionArea.height)
-        {
-            gw->player->position.y = gw->platform.y + gw->platform.height;
-        }
-        else if (gw->player->collisionArea.x >= gw->platform.x)
-        {
-            gw->player->position.x = gw->platform.x + gw->platform.width;
-        }
-        else if (gw->player->collisionArea.x <= gw->platform.x)
-        {
-            gw->player->position.x = gw->platform.x - gw->player->collisionArea.width;
-        }
-        gw->player->collisionArea.x = gw->player->position.x;
-        gw->player->collisionArea.y = gw->player->position.y;
+        managePlayerCollision(gw);
     }
 }
 
@@ -115,9 +101,9 @@ void drawGameWorld(GameWorld *gw)
     BeginDrawing();
     ClearBackground(WHITE);
 
-    // DrawTexture(gw->player->texture, gw->player->position.x, gw->player->position.y, WHITE);
+    DrawTexture(gw->player->texture, gw->player->position.x, gw->player->position.y, WHITE);
     DrawRectangleRec(gw->platform, BLUE);
-    DrawRectangleRec(gw->player->collisionArea, PINK);
+    // DrawRectangleRec(gw->player->collisionArea, PINK);
     if (CheckCollisionRecs(gw->player->collisionArea, gw->platform))
     {
         DrawText("COLIDIU", 500, 500, 32, BLACK);
@@ -125,4 +111,26 @@ void drawGameWorld(GameWorld *gw)
     DrawFPS(20, 20);
 
     EndDrawing();
+}
+
+void managePlayerCollision(GameWorld *gw)
+{
+    if (gw->player->collisionArea.y <= gw->platform.y)
+    {
+        gw->player->position.y = gw->platform.y - gw->player->collisionArea.height;
+    }
+    else if (gw->player->collisionArea.y >= gw->platform.y + gw->player->collisionArea.height)
+    {
+        gw->player->position.y = gw->platform.y + gw->platform.height;
+    }
+    else if (gw->player->collisionArea.x >= gw->platform.x)
+    {
+        gw->player->position.x = gw->platform.x + gw->platform.width;
+    }
+    else if (gw->player->collisionArea.x <= gw->platform.x)
+    {
+        gw->player->position.x = gw->platform.x - gw->player->collisionArea.width;
+    }
+    gw->player->collisionArea.x = gw->player->position.x;
+    gw->player->collisionArea.y = gw->player->position.y;
 }
